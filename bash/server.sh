@@ -5,6 +5,9 @@ filename="webserver-$today.log"
 serverdns="http://ec2-13-233-238-114.ap-south-1.compute.amazonaws.com"
 hour="$(date +"%k")"
 minute="$(date +"%M")"
+DB_NAME="results"
+TABLE="timestamp_tbl"
+
 healthmonitor(){	
 status=$(curl -s -w '%{http_code}' -o /dev/null $serverdns)
 
@@ -77,7 +80,8 @@ if [ ! -e /home/ec2-user/logs/$filename ]; then
    echo "$date:::STATUS:$status:::$statusmessage:::{Message : $content}" >> /home/ec2-user/logs/$filename
 fi
 
-
+#### Writing to MySQL database###
+mysql --login-path=client $DB_NAME -e "INSERT INTO $TABLE (\`status_code\`, \`status_message\`, \`content\`, \`timestamp_ts\`) VALUES ('$status','$statusmessage','$content','$date')"
 
 
 
