@@ -1,5 +1,4 @@
 # AppMonitor
-# testrepo
 About this 
 
 This is Demo web app hosting and taking logs file whenever there is an issue in the servers. Those files copy into s3 bucket. If there is web server not running within given time period automatically it will start and requested down time it will stop and create the log file. If there is an issue while copying s3 bucket system will send an email to support team
